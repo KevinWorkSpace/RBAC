@@ -60,19 +60,54 @@
 </div>
 <script src="jquery/jquery-2.1.1.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="layer/layer.js"></script>
 <script>
     function dologin() {
         var account = $("#loginacct").val()
         if (account == "") {
-            alert("用户名不能为空")
+            // alert("用户名不能为空")
+            layer.msg("用户名不能为空", {time:1000, icon:5, shift:6}, function () {
+
+            })
             return
         }
         var password = $("#userpswd").val()
         if (password == "") {
-            alert("密码不能为空")
+            // alert("密码不能为空")
+            layer.msg("密码不能为空", {time:1000, icon:5, shift:6}, function () {
+
+            })
             return
         }
-        $("#loginForm").submit()
+        var loadingIndex = null
+        $.ajax({
+            type:"POST",
+            url:"doAjaxLogin",
+            data:{
+                "loginacct":account,
+                "userpswd":password
+            },
+            beforeSend:function () {
+                loadingIndex = layer.msg('处理中', {icon:16})
+            },
+            success:function (result) {
+                if (result.success == true) {
+                    window.location.href = "main"
+                }
+                else {
+                    layer.msg("用户名或密码错误", {time:1000, icon:5, shift:6}, function () {
+
+                    })
+                }
+                // if (result == "") {
+                //     layer.msg("用户名或密码错误", {time:1000, icon:5, shift:6}, function () {
+                //
+                //     })
+                // }
+                // else window.location.href = "main"
+                layer.close(loadingIndex)
+            }
+        })
     }
 </script>
 </body>

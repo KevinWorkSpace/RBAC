@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface UserDao {
@@ -14,4 +15,10 @@ public interface UserDao {
 
     @Select("select * from t_user where loginacct = #{loginacct} and userpswd = #{userpswd}")
     User query4login(User user);
+
+    List<User> pageQueryData(Map<String, Object> map);
+
+    int pageCount(Map<String, Object> map);
+
+    void insertUser(User user);
 }

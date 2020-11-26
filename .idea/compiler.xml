@@ -12,12 +12,12 @@
         <module name="atcrowdfunding-common" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="atcrowdfunding-common" target="1.5" />
-      <module name="atcrowdfunding-manager" target="1.5" />
-      <module name="atcrowdfunding-parent" target="1.5" />
-      <module name="atcrowdfunding-portal" target="1.5" />
-      <module name="atcrowdfunding-web" target="1.5" />
+    <bytecodeTargetLevel target="8">
+      <module name="atcrowdfunding-common" target="8" />
+      <module name="atcrowdfunding-manager" target="8" />
+      <module name="atcrowdfunding-parent" target="8" />
+      <module name="atcrowdfunding-portal" target="8" />
+      <module name="atcrowdfunding-web" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -6,6 +6,7 @@ public class User {
     String username;
     String loginacct;
     String userpswd;
+    String email;
 
     public int getId() {
         return id;
@@ -37,5 +38,13 @@ public class User {
 
     public void setUserpswd(String userpswd) {
         this.userpswd = userpswd;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

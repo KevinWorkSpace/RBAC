@@ -21,4 +21,11 @@ public interface UserDao {
     int pageCount(Map<String, Object> map);
 
     void insertUser(User user);
+
+    @Select("select * from t_user where id = #{id}")
+    User queryById(Integer id);
+
+    void updateUser(User user);
+
+    void deleteUser(Integer id);
 }

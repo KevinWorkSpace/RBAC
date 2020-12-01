@@ -6,6 +6,7 @@ import com.atguigu.atcrowdfunding.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,5 +35,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public void insertUser(User user) {
         userDao.insertUser(user);
+    }
+
+    @Override
+    public User queryById(Integer id) {
+        return userDao.queryById(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userDao.updateUser(user);
+    }
+
+    @Override
+    public void deleteUser(Integer id) {
+        userDao.deleteUser(id);
+    }
+
+    @Override
+    public void deleteUsers(HashMap<String, Object> map) {
+        Integer[] ids = (Integer[]) map.get("users");
+        for (int id : ids) {
+            userDao.deleteUser(id);
+        }
     }
 }

@@ -3,13 +3,11 @@ package com.atguigu.atcrowdfunding.controller;
 import com.atguigu.atcrowdfunding.bean.AjaxResult;
 import com.atguigu.atcrowdfunding.bean.Page;
 import com.atguigu.atcrowdfunding.bean.Role;
-import com.atguigu.atcrowdfunding.bean.User;
 import com.atguigu.atcrowdfunding.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;

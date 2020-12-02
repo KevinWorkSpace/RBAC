@@ -1,5 +1,6 @@
 package com.atguigu.atcrowdfunding.service;
 
+import com.atguigu.atcrowdfunding.bean.Role;
 import com.atguigu.atcrowdfunding.bean.User;
 
 import java.util.HashMap;
@@ -25,4 +26,10 @@ public interface UserService {
     void deleteUser(Integer id);
 
     void deleteUsers(HashMap<String, Object> map);
+
+    void deleteUserRoles(Map<String, Object> map);
+
+    void insertUserRoles(Map<String, Object> map);
+
+    List<Integer> queryRoleidsByUserid(Integer id);
 }

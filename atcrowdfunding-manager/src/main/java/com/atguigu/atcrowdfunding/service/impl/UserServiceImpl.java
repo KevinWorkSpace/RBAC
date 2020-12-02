@@ -1,5 +1,6 @@
 package com.atguigu.atcrowdfunding.service.impl;
 
+import com.atguigu.atcrowdfunding.bean.Role;
 import com.atguigu.atcrowdfunding.bean.User;
 import com.atguigu.atcrowdfunding.dao.UserDao;
 import com.atguigu.atcrowdfunding.service.UserService;
@@ -58,5 +59,20 @@ public class UserServiceImpl implements UserService {
         for (int id : ids) {
             userDao.deleteUser(id);
         }
+    }
+
+    @Override
+    public void deleteUserRoles(Map<String, Object> map) {
+        userDao.deleteUserRoles(map);
+    }
+
+    @Override
+    public void insertUserRoles(Map<String, Object> map) {
+        userDao.insertUserRoles(map);
+    }
+
+    @Override
+    public List<Integer> queryRoleidsByUserid(Integer id) {
+        return userDao.queryRoleidsByUserid(id);
     }
 }

@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -94,6 +91,17 @@ public class UserController {
         model.addAttribute("user", user);
         List<Role> roles = roleService.queryAll();
         model.addAttribute("roles", roles);
+        List<Role> assignList = new ArrayList<>();
+        List<Role> unassignList = new ArrayList<>();
+        List<Integer> assignRoleids = userService.queryRoleidsByUserid(id);
+        for (Role role : roles) {
+            if (assignRoleids.contains(role.getId())) {
+                assignList.add(role);
+            }
+            else unassignList.add(role);
+        }
+        model.addAttribute("assignList", assignList);
+        model.addAttribute("unassignList", unassignList);
         return "user/assign";
     }
 
@@ -137,6 +145,40 @@ public class UserController {
             page.setCurPage(pageNo);
             page.setTotalPage(totalPage);
             result.setData(page);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/doAssign")
+    public Object doAssign(Integer userid, Integer[] unassignroleids) {
+        AjaxResult result = new AjaxResult();
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("userid", userid);
+            map.put("roleids", unassignroleids);
+            userService.insertUserRoles(map);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/dounAssign")
+    public Object dounAssign(Integer userid, Integer[] assignroleids) {
+        AjaxResult result = new AjaxResult();
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("userid", userid);
+            map.put("roleids", assignroleids);
+            userService.deleteUserRoles(map);
             result.setSuccess(true);
         } catch (Exception e) {
             e.printStackTrace();

@@ -133,11 +133,12 @@
             </ol>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form role="form" class="form-inline">
+                    <form id="roleForm" role="form" class="form-inline">
+                        <input type="hidden" name="userid" value="${user.id}">
                         <div class="form-group">
                             <label for="exampleInputPassword1">未分配角色列表</label><br>
-                            <select id="leftList" class="form-control" multiple size="10" style="width:200px;overflow-y:auto;">
-                                <c:forEach items="${roles}" var="role">
+                            <select name="unassignroleids" id="leftList" class="form-control" multiple size="10" style="width:200px;overflow-y:auto;">
+                                <c:forEach items="${unassignList}" var="role">
                                     <option value="${role.id}">${role.name}</option>
                                 </c:forEach>
                             </select>
@@ -151,8 +152,10 @@
                         </div>
                         <div class="form-group" style="margin-left:40px;">
                             <label for="exampleInputPassword1">已分配角色列表</label><br>
-                            <select id="rightList" class="form-control" multiple size="10" style="width:200px;overflow-y:auto;">
-
+                            <select name="assignroleids" id="rightList" class="form-control" multiple size="10" style="width:200px;overflow-y:auto;">
+                                <c:forEach items="${assignList}" var="role">
+                                    <option value="${role.id}">${role.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                     </form>
@@ -211,7 +214,24 @@
                 })
             }
             else {
-                $("#rightList").append(opts);
+                $.ajax({
+                    type:"POST",
+                    url:"doAssign",
+                    data:$("#roleForm").serialize(),
+                    success:function (result) {
+                        if (result.success) {
+                            $("#rightList").append(opts);
+                            layer.msg("分配角色数据成功", {time:1000, icon:6}, function () {
+
+                            })
+                        }
+                        else {
+                            layer.msg("分配角色数据失败", {time:1000, icon:5, shift:6}, function () {
+
+                            })
+                        }
+                    }
+                })
             }
         })
 
@@ -223,7 +243,24 @@
                 })
             }
             else {
-                $("#leftList").append(opts);
+                $.ajax({
+                    type:"POST",
+                    url:"dounAssign",
+                    data:$("#roleForm").serialize(),
+                    success:function (result) {
+                        if (result.success) {
+                            $("#leftList").append(opts);
+                            layer.msg("取消分配角色数据成功", {time:1000, icon:6}, function () {
+
+                            })
+                        }
+                        else {
+                            layer.msg("取消分配角色数据失败", {time:1000, icon:5, shift:6}, function () {
+
+                            })
+                        }
+                    }
+                })
             }
         })
     });

@@ -1,5 +1,6 @@
 package com.atguigu.atcrowdfunding.dao;
 
+import com.atguigu.atcrowdfunding.bean.Role;
 import com.atguigu.atcrowdfunding.bean.User;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,11 @@ public interface UserDao {
     void updateUser(User user);
 
     void deleteUser(Integer id);
+
+    void deleteUserRoles(Map<String, Object> map);
+
+    void insertUserRoles(Map<String, Object> map);
+
+    @Select("select roleid from t_user_role where userid = #{userid}")
+    List<Integer> queryRoleidsByUserid(Integer id);
 }

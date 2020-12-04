@@ -18,4 +18,6 @@ public interface RoleService {
     void deleteRoles(HashMap<String, Object> map);
 
     List<Role> queryAll();
+
+    void insertRolePermission(Map<String, Object> map);
 }

@@ -89,6 +89,28 @@ public class RoleController {
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping("/doAssign")
+    public Object doAssign(Integer roleid, Integer[] permissionids) {
+        AjaxResult result = new AjaxResult();
+        try {
+            Map<String, Object> map = new HashMap<>();
+            map.put("roleid", roleid);
+            map.put("permissionids", permissionids);
+            roleService.insertRolePermission(map);
+            result.setSuccess(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @RequestMapping("/assign")
+    public String assign() {
+        return "role/assign";
+    }
+
     @RequestMapping("/index")
     public String index() {
         return "role/index";

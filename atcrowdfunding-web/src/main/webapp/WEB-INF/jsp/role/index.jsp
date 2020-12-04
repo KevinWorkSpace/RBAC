@@ -245,7 +245,7 @@
                         tableContent += '    <td><input type="checkbox" name="roleId" value="'+role.id+'"></td>';
                         tableContent += '    <td>'+(role.name)+'</td>';
                         tableContent += '    <td>';
-                        tableContent += '        <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
+                        tableContent += '        <button type="button" onclick="goAssignPage('+role.id+')" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>';
                         tableContent += '        <button type="button" onclick="updateRole('+role.id+')" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>';
                         tableContent += '        <button type="button" onclick="deleteRole('+role.id+',\''+role.name+'\')" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>';
                         tableContent += '    </td>';
@@ -276,6 +276,10 @@
                 }
             }
         })
+    }
+
+    function goAssignPage(id) {
+        window.location.href = "assign?id=" + id;
     }
 
     function updateRole(id) {

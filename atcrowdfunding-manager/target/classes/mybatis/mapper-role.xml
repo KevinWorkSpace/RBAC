@@ -37,5 +37,16 @@
     <select id="queryAll" resultType="com.atguigu.atcrowdfunding.bean.Role">
         select * from t_role;
     </select>
+    
+    <insert id="insertRolePermission">
+        insert into t_role_permission (roleid, permissionid) values 
+        <foreach collection="permissionids" item="permissionid" separator=",">
+            (#{roleid}, #{permissionid})
+        </foreach>
+    </insert>
+    
+    <delete id="deleteRolePermissions">
+        delete from t_role_permission where roleid = #{roleid}
+    </delete>
 
 </mapper>

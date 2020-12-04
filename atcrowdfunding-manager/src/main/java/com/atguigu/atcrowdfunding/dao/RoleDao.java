@@ -21,4 +21,8 @@ public interface RoleDao {
     Role queryById(Integer id);
 
     List<Role> queryAll();
+
+    void insertRolePermission(Map<String, Object> map);
+
+    void deleteRolePermissions(Map<String, Object> map);
 }

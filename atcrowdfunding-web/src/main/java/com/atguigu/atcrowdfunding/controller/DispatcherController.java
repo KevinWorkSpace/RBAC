@@ -1,7 +1,9 @@
 package com.atguigu.atcrowdfunding.controller;
 
 import com.atguigu.atcrowdfunding.bean.AjaxResult;
+import com.atguigu.atcrowdfunding.bean.Permission;
 import com.atguigu.atcrowdfunding.bean.User;
+import com.atguigu.atcrowdfunding.service.PermissionService;
 import com.atguigu.atcrowdfunding.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,12 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.util.*;
 
 @Controller
 public class DispatcherController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PermissionService permissionService;
 
     @RequestMapping("/login")
     public String login() {
@@ -35,6 +41,11 @@ public class DispatcherController {
         return "main";
     }
 
+    @RequestMapping("/error")
+    public String error() {
+        return "error";
+    }
+
     @ResponseBody
     @RequestMapping("/doAjaxLogin")
     public Object doAjaxLogin(User user, HttpSession session) {
@@ -43,6 +54,28 @@ public class DispatcherController {
         if (dbuser != null) {
             result.setSuccess(true);
             session.setAttribute("loginUser", dbuser);
+
+            List<Permission> permissions = permissionService.queryPermissionsByUser(dbuser);
+            Map<Integer, Permission> map = new HashMap<>();
+            Permission root = null;
+            Set<String> set = new HashSet<>();
+            for (Permission permission : permissions) {
+                map.put(permission.getId(), permission);
+                if (permission.getUrl() != null && !"".equals(permission.getUrl())) {
+                    set.add(session.getServletContext().getContextPath() + "/" + permission.getUrl());
+                }
+            }
+            session.setAttribute("authUriSet", set);
+            for (Permission permission : permissions) {
+                if (permission.getPid() == 0) {
+                    root = permission;
+                }
+                else {
+                    Permission parent = map.get(permission.getPid());
+                    parent.getChildren().add(permission);
+                }
+            }
+            session.setAttribute("rootPermission", root);
         }
         else result.setSuccess(false);
         return result;
